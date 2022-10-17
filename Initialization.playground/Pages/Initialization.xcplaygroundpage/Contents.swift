@@ -21,8 +21,10 @@
 //: ### Initializers
 //:
 //: Initializers are called to create a new instance of a particular type. In its simplest form, an initializer is like an instance method with no parameters, written using the init keyword:
-init() {
-    // perform some initialization here
+class BasicInitializer {
+    init() {
+        // perform some initialization here
+    }
 }
 //: The example below defines a new structure called Fahrenheit to store temperatures expressed in the Fahrenheit scale. The Fahrenheit structure has one stored property, temperature, which is of type Double:
 struct Fahrenheit {
@@ -44,7 +46,7 @@ print("The default temperature is \(f.temperature)° Fahrenheit")
 //:     → If a property always takes the same initial value, provide a default value rather than setting a value within an initializer. The end result is the same, but the default value ties the property’s initialization more closely to its declaration. It makes for shorter, clearer initializers and enables you to infer the type of the property from its default value. The default value also makes it easier for you to take advantage of default initializers and initializer inheritance, as described later in this chapter.
 //:
 //: You can write the Fahrenheit structure from above in a simpler form by providing a default value for its temperature property at the point that the property is declared:
-struct Fahrenheit {
+struct Fahrenheit2 {
     var temperature = 32.0
 }
 //: ## Customizing Initialization
@@ -97,14 +99,15 @@ struct Color {
 let magenta = Color(red: 1.0, green: 0.0, blue: 1.0)
 let halfGray = Color(white: 0.5)
 //: Note that it isn’t possible to call these initializers without using argument labels. Argument labels must always be used in an initializer if they’re defined, and omitting them is a compile-time error:
-let veryGreen = Color(0.0, 1.0, 0.0)
+// ⛔️ Compilation error: uncomment to view
+//let veryGreen = Color(0.0, 1.0, 0.0)
 // this reports a compile-time error - argument labels are required
 //: ### Initializer Parameters Without Argument Labels
 //:
 //: If you don’t want to use an argument label for an initializer parameter, write an underscore (_) instead of an explicit argument label for that parameter to override the default behavior.
 //:
 //: Here’s an expanded version of the Celsius example from Initialization Parameters above, with an additional initializer to create a new Celsius instance from a Double value that’s already in the Celsius scale:
-struct Celsius {
+struct Celsius2 {
     var temperatureInCelsius: Double
     init(fromFahrenheit fahrenheit: Double) {
         temperatureInCelsius = (fahrenheit - 32.0) / 1.8
@@ -116,7 +119,7 @@ struct Celsius {
         temperatureInCelsius = celsius
     }
 }
-let bodyTemperature = Celsius(37.0)
+let bodyTemperature = Celsius2(37.0)
 // bodyTemperature.temperatureInCelsius is 37.0
 //: The initializer call Celsius(37.0) is clear in its intent without the need for an argument label. It’s therefore appropriate to write this initializer as init(_ celsius: Double) so that it can be called by providing an unnamed Double value.
 //:
@@ -149,7 +152,7 @@ cheeseQuestion.response = "Yes, I do like cheese."
 //:     → For class instances, a constant property can be modified during initialization only by the class that introduces it. It can’t be modified by a subclass.
 //:
 //: You can revise the SurveyQuestion example from above to use a constant property rather than a variable property for the text property of the question, to indicate that the question doesn’t change once an instance of SurveyQuestion is created. Even though the text property is now a constant, it can still be set within the class’s initializer:
-class SurveyQuestion {
+class SurveyQuestion2 {
     let text: String
     var response: String?
     init(text: String) {
@@ -159,7 +162,7 @@ class SurveyQuestion {
         print(text)
     }
 }
-let beetsQuestion = SurveyQuestion(text: "How about beets?")
+let beetsQuestion = SurveyQuestion2(text: "How about beets?")
 beetsQuestion.ask()
 // Prints "How about beets?"
 beetsQuestion.response = "I also like beets. (But not with cheese.)"
@@ -211,7 +214,7 @@ print(zeroByZero.width, zeroByZero.height)
 //:     → If you want your custom value type to be initializable with the default initializer and memberwise initializer, and also with your own custom initializers, write your custom initializers in an extension rather than as part of the value type’s original implementation. For more information, see Extensions.
 //:
 //: The following example defines a custom Rect structure to represent a geometric rectangle. The example requires two supporting structures called Size and Point, both of which provide default values of 0.0 for all of their properties:
-struct Size {
+struct Size2 {
     var width = 0.0, height = 0.0
 }
 struct Point {
@@ -220,13 +223,13 @@ struct Point {
 //: You can initialize the Rect structure below in one of three ways—by using its default zero-initialized origin and size property values, by providing a specific origin point and size, or by providing a specific center point and size. These initialization options are represented by three custom initializers that are part of the Rect structure’s definition:
 struct Rect {
     var origin = Point()
-    var size = Size()
+    var size = Size2()
     init() {}
-    init(origin: Point, size: Size) {
+    init(origin: Point, size: Size2) {
         self.origin = origin
         self.size = size
     }
-    init(center: Point, size: Size) {
+    init(center: Point, size: Size2) {
         let originX = center.x - (size.width / 2)
         let originY = center.y - (size.height / 2)
         self.init(origin: Point(x: originX, y: originY), size: size)
@@ -237,11 +240,11 @@ let basicRect = Rect()
 // basicRect's origin is (0.0, 0.0) and its size is (0.0, 0.0)
 //: The second Rect initializer, init(origin:size:), is functionally the same as the memberwise initializer that the structure would have received if it didn’t have its own custom initializers. This initializer simply assigns the origin and size argument values to the appropriate stored properties:
 let originRect = Rect(origin: Point(x: 2.0, y: 2.0),
-                      size: Size(width: 5.0, height: 5.0))
+                      size: Size2(width: 5.0, height: 5.0))
 // originRect's origin is (2.0, 2.0) and its size is (5.0, 5.0)
 //: The third Rect initializer, init(center:size:), is slightly more complex. It starts by calculating an appropriate origin point based on a center point and a size value. It then calls (or delegates) to the init(origin:size:) initializer, which stores the new origin and size values in the appropriate properties:
 let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
-                      size: Size(width: 3.0, height: 3.0))
+                      size: Size2(width: 3.0, height: 3.0))
 // centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
 //: The init(center:size:) initializer could have assigned the new values of origin and size to the appropriate properties itself. However, it’s more convenient (and clearer in intent) for the init(center:size:) initializer to take advantage of an existing initializer that already provides exactly that functionality.
 //:
@@ -269,13 +272,17 @@ let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
 //: ### Syntax for Designated and Convenience Initializers
 //:
 //: Designated initializers for classes are written in the same way as simple initializers for value types:
-init(parameters) {
-    statements
-}
+//: * callout(Structure):
+//:     init(parameters) {
+//:         statements
+//:     }
+//:
 //: Convenience initializers are written in the same style, but with the convenience modifier placed before the init keyword, separated by a space:
-convenience init(parameters) {
-    statements
-}
+//: * callout(Structure):
+//:     convenience init(parameters) {
+//:         statements
+//:     }
+//:
 //: ### Initializer Delegation for Class Types
 //:
 //: To simplify the relationships between designated and convenience initializers, Swift applies the following three rules for delegation calls between initializers:
@@ -520,7 +527,7 @@ let sixEggs = RecipeIngredient(name: "Eggs", quantity: 6)
 //: The third and final class in the hierarchy is a subclass of RecipeIngredient called ShoppingListItem. The ShoppingListItem class models a recipe ingredient as it appears in a shopping list.
 //:
 //: Every item in the shopping list starts out as “unpurchased”. To represent this fact, ShoppingListItem introduces a Boolean property called purchased, with a default value of false. ShoppingListItem also adds a computed description property, which provides a textual description of a ShoppingListItem instance:
-class ShoppingListItem: RecipeIngredient {
+class ShoppingListItem2: RecipeIngredient {
     var purchased = false
     var description: String {
         var output = "\(quantity) x \(name)"
@@ -538,9 +545,9 @@ class ShoppingListItem: RecipeIngredient {
 //: ![Diagram](initializersExample03_2x.png)
 //: You can use all three of the inherited initializers to create a new ShoppingListItem instance:
 var breakfastList = [
-    ShoppingListItem(),
-    ShoppingListItem(name: "Bacon"),
-    ShoppingListItem(name: "Eggs", quantity: 6),
+    ShoppingListItem2(),
+    ShoppingListItem2(name: "Bacon"),
+    ShoppingListItem2(name: "Eggs", quantity: 6),
 ]
 breakfastList[0].name = "Orange juice"
 breakfastList[0].purchased = true
@@ -646,18 +653,18 @@ if unknownUnit == nil {
 //: Enumerations with raw values automatically receive a failable initializer, init?(rawValue:), that takes a parameter called rawValue of the appropriate raw-value type and selects a matching enumeration case if one is found, or triggers an initialization failure if no matching value exists.
 //:
 //: You can rewrite the TemperatureUnit example from above to use raw values of type Character and to take advantage of the init?(rawValue:) initializer:
-enum TemperatureUnit: Character {
+enum TemperatureUnit2: Character {
     case kelvin = "K", celsius = "C", fahrenheit = "F"
 }
 
-let fahrenheitUnit = TemperatureUnit(rawValue: "F")
-if fahrenheitUnit != nil {
+let fahrenheitUnit2 = TemperatureUnit2(rawValue: "F")
+if fahrenheitUnit2 != nil {
     print("This is a defined temperature unit, so initialization succeeded.")
 }
 // Prints "This is a defined temperature unit, so initialization succeeded."
 
-let unknownUnit = TemperatureUnit(rawValue: "X")
-if unknownUnit == nil {
+let unknownUnit2 = TemperatureUnit2(rawValue: "X")
+if unknownUnit2 == nil {
     print("This isn't a defined temperature unit, so initialization failed.")
 }
 // Prints "This isn't a defined temperature unit, so initialization failed."
@@ -783,10 +790,12 @@ class SomeSubclass: SomeClass {
 //: These kinds of closures or functions typically create a temporary value of the same type as the property, tailor that value to represent the desired initial state, and then return that temporary value to be used as the property’s default value.
 //:
 //: Here’s a skeleton outline of how a closure can be used to provide a default property value:
-class SomeClass {
+class SomeType {}
+class SomeClass2 {
     let someProperty: SomeType = {
         // create a default value for someProperty inside this closure
         // someValue must be of the same type as SomeType
+        let someValue = SomeType()
         return someValue
     }()
 }
