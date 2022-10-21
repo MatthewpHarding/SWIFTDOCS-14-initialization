@@ -386,7 +386,7 @@ A simple way to remember this is:
 
 These rules are illustrated in the figure below:
 
-![Diagram](initializerDelegation01_2x.png)
+![Diagram](readme-images/initializerDelegation01_2x.png)
 
 Here, the superclass has a single designated initializer and two convenience initializers. One convenience initializer calls another convenience initializer, which in turn calls the single designated initializer. This satisfies rules 2 and 3 from above. The superclass doesn’t itself have a further superclass, and so rule 1 doesn’t apply.
 
@@ -398,7 +398,7 @@ The subclass in this figure has two designated initializers and one convenience 
 
 The figure below shows a more complex class hierarchy for four classes. It illustrates how the designated initializers in this hierarchy act as “funnel” points for class initialization, simplifying the interrelationships among classes in the chain:
 
-![Diagram](initializerDelegation02_2x.png)
+![Diagram](readme-images/initializerDelegation02_2x.png)
 
 ### Two-Phase Initialization
 
@@ -456,7 +456,7 @@ Here’s how two-phase initialization plays out, based on the four safety checks
 
 Here’s how phase 1 looks for an initialization call for a hypothetical subclass and superclass:
 
-![Diagram](twoPhaseInitialization01_2x.png)
+![Diagram](readme-images/twoPhaseInitialization01_2x.png)
 
 In this example, initialization begins with a call to a convenience initializer on the subclass. This convenience initializer can’t yet modify any properties. It delegates across to a designated initializer from the same class.
 
@@ -468,7 +468,7 @@ As soon as all properties of the superclass have an initial value, its memory is
 
 Here’s how phase 2 looks for the same initialization call:
 
-![Diagram](twoPhaseInitialization02_2x.png)
+![Diagram](readme-images/twoPhaseInitialization02_2x.png)
 
 The superclass’s designated initializer now has an opportunity to customize the instance further (although it doesn’t have to).
 
@@ -600,7 +600,7 @@ class Food {
 ```
 The figure below shows the initializer chain for the Food class:
 
-![Diagram](initializersExample01_2x.png)
+![Diagram](readme-images/initializersExample01_2x.png)
 
 Classes don’t have a default memberwise initializer, and so the Food class provides a designated initializer that takes a single argument called name. This initializer can be used to create a new Food instance with a specific name:
 
@@ -632,7 +632,7 @@ class RecipeIngredient: Food {
 ```
 The figure below shows the initializer chain for the RecipeIngredient class:
 
-![Diagram](initializersExample02_2x.png)
+![Diagram](readme-images/initializersExample02_2x.png)
 
 The RecipeIngredient class has a single designated initializer, init(name: String, quantity: Int), which can be used to populate all of the properties of a new RecipeIngredient instance. This initializer starts by assigning the passed quantity argument to the quantity property, which is the only new property introduced by RecipeIngredient. After doing so, the initializer delegates up to the init(name: String) initializer of the Food class. This process satisfies safety check 1 from Two-Phase Initialization above.
 
@@ -673,7 +673,7 @@ Because it provides a default value for all of the properties it introduces and 
 
 The figure below shows the overall initializer chain for all three classes:
 
-![Diagram](initializersExample03_2x.png)
+![Diagram](readme-images/initializersExample03_2x.png)
 
 You can use all three of the inherited initializers to create a new ShoppingListItem instance:
 
@@ -999,7 +999,7 @@ Note that the closure’s end curly brace is followed by an empty pair of parent
 
 The example below defines a structure called Chessboard, which models a board for the game of chess. Chess is played on an 8 x 8 board, with alternating black and white squares.
 
-![Diagram](chessBoard_2x.png)
+![Diagram](readme-images/chessBoard_2x.png)
 
 To represent this game board, the Chessboard structure has a single property called boardColors, which is an array of 64 Bool values. A value of true in the array represents a black square and a value of false represents a white square. The first item in the array represents the top left square on the board and the last item in the array represents the bottom right square on the board.
 
