@@ -1,6 +1,7 @@
 //: ![Swift](swift-logo.png)
-//: Swift v5.7 [official docs](https://docs.swift.org/swift-book/LanguageGuide/Initialization.html)
-//: # 14. Initialization
+//: Swift v5.7 | [Swift.org](https://docs.swift.org) | [The official Swift Language Guide](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics)
+//:
+//: # Page 14. Initialization
 //:
 //:
 //: Initialization is the process of preparing an instance of a class, structure, or enumeration for use. This process involves setting an initial value for each stored property on that instance and performing any other setup or initialization that’s required before the new instance is ready for use.
